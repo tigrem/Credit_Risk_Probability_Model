@@ -1,4 +1,15 @@
+scikit-learn
 pandas
 numpy
 matplotlib
 seaborn
+mlflow
+pytest
+fastapi==0.111.0 # Or the latest stable version
+uvicorn[standard]==0.30.1 # Or the latest stable version
+pydantic==2.7.4 # Or the latest stable version, compatible with FastAPI
+flake8==7.1.0 # Or the latest stable version
+mlflow==2.13.0 # Ensure MLflow is updated if you're using a specific version for registry interaction
+scikit-learn==1.5.0 # Ensure scikit-learn is also up-to-date and compatible
+pandas==2.2.2 # Ensure pandas is up-to-date and compatible
+numpy==1.26.4 # Ensure numpy is up-to-date and compatible
