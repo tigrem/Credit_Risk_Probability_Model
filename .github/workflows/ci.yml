@@ -1,0 +1,48 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main # Trigger on every push to the main branch
+  pull_request:
+    branches:
+      - main # Also trigger on pull requests to main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Action to check out your repository code
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9' # Use the Python version compatible with your project
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest # Install linter and test runner directly for CI
+          # If your tests or linter require other project dependencies,
+          # you should install them from requirements.txt
+          pip install -r requirements.txt
+
+      - name: Run Flake8 Linter
+        run: |
+          echo "Running Flake8..."
+          # Exclude common generated files or directories if needed
+          # --max-line-length for line length, --ignore for specific error codes
+          flake8 src/ --exclude src/api/pydantic_models.py --max-line-length=120 --ignore=E203,W503
+          echo "Flake8 check complete."
+        # The build will fail if flake8 finds issues (non-zero exit code)
+
+      - name: Run Pytest
+        run: |
+          echo "Running Pytest..."
+          # You'll need to create a `tests` directory with test files (e.g., test_*.py)
+          # and some simple tests for your utility functions, API, etc.
+          pytest # This command will look for and run tests automatically
+          echo "Pytest complete."
+        # The build will fail if any tests fail (non-zero exit code)
